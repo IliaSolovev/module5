@@ -1,6 +1,8 @@
 const assert = require("chai").assert;
 const memo = require('../index').memo;
+const deepEqual = require('../index').deepEqual;
 const createHashName = require('../index').createHashName;
+const fc =  require("fast-check");
 
 describe('test memo', () => {
 
@@ -127,7 +129,7 @@ describe('test memo', () => {
       memoFunc(test);
 
       assert.equal(count, 1)
-    })
+    });
 
     it('a function with 1 func unequal arg should called twice', () => {
       let count = 0;
@@ -147,7 +149,7 @@ describe('test memo', () => {
       memoFunc(test2);
 
       assert.equal(count, 2)
-    })
+    });
 
     it('a function with 2 unequal complex object', () => {
       let count = 0;
@@ -184,9 +186,28 @@ describe('create hash name', () => {
   it('hash of two arguments', () => {
     const hashName = createHashName(['a', 'b']);
     assert.equal(hashName, '["a","b"]')
-  })
+  });
   it('hash of three arguments', () => {
     const hashName = createHashName(['a', 'b', 'c']);
     assert.equal(hashName, '["a","b","c"]')
+  })
+});
+
+describe('is equal objects', () => {
+  it('simple equal objects', () => {
+   const bool =  deepEqual({text: 'text'},{text: 'text'});
+   assert.equal(bool,true)
+  });
+
+  it('simple unequal objects', () => {
+   const bool =  deepEqual({text: 'text'},{text: 'text1'});
+   assert.equal(bool,false)
+  });
+
+  it('object with unequal methods', () => {
+    const func1 = () => {};
+    const func2 = () => {};
+    const bool =  deepEqual({text: 'text', func: func1},{text: 'text1',func: func2});
+    assert.equal(bool,false)
   })
 });
