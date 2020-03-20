@@ -15,5 +15,12 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    "indent": ["error", 2],
+    "linebreak-style": ["warn", "unix"],
+    "quotes": ["warn", "double"],
+    "semi": ["error", "always"],
+    "array-bracket-spacing": ["warn", "always"],
+    "object-curly-spacing": ["error", "always"],
+    "no-console": "error"
   },
 };
