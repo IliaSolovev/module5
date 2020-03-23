@@ -1,19 +1,22 @@
-const { Questions } = require("./questions");
+const { IsCorrectAnswer } = require("./IsCorrectAnswer");
+const { randomInteger } = require("./common");
 
 function Game() {
-  Questions.call(this);
+  IsCorrectAnswer.call(this, randomInteger(1, 100));
   this.answer = "";
 }
-Game.prototype = Object.create(Questions.prototype);
+Game.prototype = Object.create(IsCorrectAnswer.prototype);
 
 Game.prototype.start = async function () {
-  const { answer } = this;
-  const range = this.createNumber((await this.askQuestion("Введите диапазон чисел (через запятую).").split(",")));
-};
-
-Game.prototype.createNumber = (min = 1, max = 100) => {
-  const rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
+  let { answer } = this;
+  while (this.checkSteps()) {
+    answer = await this.askQuestion("Введите число: ");
+    if (this.checkCorrectAnswer(Number(answer))) {
+      this.rl.close();
+    }
+    this.addStep();
+  }
+  this.rl.close();
 };
 
 module.exports = {

@@ -179,14 +179,14 @@ describe("create hash name", () => {
   });
 
   it("hash of two arguments", () => {
-    const hashName = createHashName([ "a", "b" ]);
+    const hashName = createHashName([ 1, 2 ]);
 
-    assert.equal(hashName, "[a,b]");
+    assert.equal(hashName, "[1,2]");
   });
 
   it("hash of three arguments", () => {
-    const hashName = createHashName([ "a", "b", "c" ]);
-    assert.equal(hashName, "[a,b,c]");
+    const hashName = createHashName([ 1, 2, 3 ]);
+    assert.equal(hashName, "[1,2,3]");
   });
 });
 
