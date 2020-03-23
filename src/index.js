@@ -4,53 +4,51 @@ const createHashName = (data) => {
   }
 
   switch (typeof data) {
-  case "function":
-    return data;
-  case "object":
-    return JSON.stringify(data);
-  default:
-    return data.toString();
+    case "function":
+      return data;
+    case "object":
+      return JSON.stringify(data);
+    default:
+      return data.toString();
   }
 };
 
-const deepEqual = (a, b) => {
-  if (a === b) {
-    return true;
-  }
+const memoize = (func) => {
+  const map = new Map();
+  const weakMap = new WeakMap();
 
-  if (a == null || typeof a !== "object" || b == null || typeof b !== "object") {
-    return false;
-  }
-
-  let propertiesInA = 0;
-  let propertiesInB = 0;
-  for (const property in a) {
-    propertiesInA += 1;
-  }
-  for (const property in b) {
-    propertiesInB += 1;
-    if (!(property in a) || !deepEqual(a[property], b[property])) {
-      return false;
-    }
-  }
-  return propertiesInA === propertiesInB;
-};
-
-const memo = (func) => {
-  const hash = new Map();
   return (...arg) => {
-    const hashName = createHashName(arg);
-    if (hash.has(hashName)) {
-      return hash.get(hashName);
+    if (arg.length > 1) {
+      if (weakMap.has(arg)) {
+        console.log(arg)
+        return weakMap.get(arg);
+      } else {
+        console.log(arg)
+        const res = func(...arg);
+        weakMap.set(arg, res);
+        return res;
+      }
+    }else{
+      if(typeof arg[0] === 'object' || typeof arg[0] === 'function'){
+        if (weakMap.has(arg[0])) {
+          return weakMap.get(arg[0]);
+        } else {
+          const res = func(arg[0]);
+          weakMap.set(arg[0], res);
+          return res;
+        }
+      }else{
+        if (map.has(arg[0])) {
+          return map.get(arg[0]);
+        }
+        const res = func(arg[0]);
+        map.set(arg[0], res);
+        return res;
+      }
     }
-    const res = func(...arg);
-    hash.set(hashName, res);
-    return res;
   };
 };
 
 module.exports = {
-  memo,
-  createHashName,
-  deepEqual,
+  memoize,
 };
