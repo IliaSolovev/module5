@@ -1,13 +1,13 @@
 const { IsCorrectAnswer } = require("./IsCorrectAnswer");
-const { randomInteger } = require("./common");
+const { common } = require("./common");
 
 function Game() {
-  IsCorrectAnswer.call(this, randomInteger(1, 100));
+  IsCorrectAnswer.call(this, common.randomInteger(1, 100));
   this.answer = "";
 }
 Game.prototype = Object.create(IsCorrectAnswer.prototype);
 
-Game.prototype.start = async function () {
+Game.prototype.start = async function() {
   let { answer } = this;
   while (this.checkSteps()) {
     answer = await this.askQuestion("Enter number: ");
