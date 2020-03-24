@@ -4,11 +4,12 @@ const memoize = (func) => {
 
   return (...arg) => {
     if (arg.length > 1) {
-      if (weakMap.has(arg)) {
-        return weakMap.get(arg);
+      const hashName = JSON.stringify(arg);
+      if (map.has(hashName)) {
+        return map.get(hashName);
       }
       const res = func(...arg);
-      weakMap.set(arg, res);
+      map.set(hashName, res);
       return res;
     }
     if (typeof arg[0] === "object" || typeof arg[0] === "function") {

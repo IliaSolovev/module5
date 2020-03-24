@@ -63,13 +63,13 @@ describe("test memoize", () => {
   });
 
   describe("ref type", () => {
-    it("a function  should called once", () => {
+    it("a function  should called twice", () => {
       const memoizeFunc = memoize(cb);
 
       memoizeFunc({ state: 1 });
       memoizeFunc({ state: 1 });
 
-      assert.equal(cb.callCount, 1);
+      assert.equal(cb.callCount, 2);
     });
 
     it("a function should called twice", () => {
@@ -107,19 +107,14 @@ describe("test memoize", () => {
 
     it("a function should called once", () => {
       const memoizeFunc = memoize(cb);
-
-      memoizeFunc({
+      const obj = {
         text: "asd",
         obj1: {
           text2: "gsd",
         },
-      });
-      memoizeFunc({
-        text: "asd",
-        obj1: {
-          text2: "gsd",
-        },
-      });
+      };
+      memoizeFunc(obj);
+      memoizeFunc(obj);
 
       assert.equal(cb.callCount, 1);
     });
