@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/module5/index.js",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
+  },
   "dependencies": {
-    "chai": "^4.2.0",
     "eslint-plugin-jsx-a11y": "^6.2.3"
   },
   "devDependencies": {
@@ -17,12 +21,8 @@
     "fast-check": "^1.23.0",
     "mocha": "^7.1.1",
     "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
-  },
-  "scripts": {
-    "test": "mocha",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "prettier": "^1.19.1",
+    "chai": "^4.2.0"
   },
   "author": "",
   "license": "ISC"

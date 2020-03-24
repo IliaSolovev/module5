@@ -10,13 +10,13 @@ Game.prototype = Object.create(IsCorrectAnswer.prototype);
 Game.prototype.start = async function () {
   let { answer } = this;
   while (this.checkSteps()) {
-    answer = await this.askQuestion("Введите число: ");
+    answer = await this.askQuestion("Enter number: ");
     if (this.checkCorrectAnswer(Number(answer))) {
-      this.rl.close();
+      this.IO.close();
     }
     this.addStep();
   }
-  this.rl.close();
+  this.IO.close();
 };
 
 module.exports = {

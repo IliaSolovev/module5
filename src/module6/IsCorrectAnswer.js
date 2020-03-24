@@ -1,6 +1,5 @@
 const { Steps } = require("./Steps");
 
-
 function IsCorrectAnswer(correctAnswer) {
   Steps.call(this);
   this.correctAnswer = correctAnswer;

@@ -13,7 +13,11 @@ Steps.prototype.addStep = function () {
 };
 
 Steps.prototype.checkSteps = function () {
-  return this.currentSteps < this.maxStep;
+  if (this.currentSteps < this.maxStep) {
+    return true;
+  }
+  console.log("you have exceeded the number of attempts");
+  return false;
 };
 
 module.exports = {
