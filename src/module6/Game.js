@@ -6,6 +6,7 @@ function Game() {
   this.answer = "";
 }
 Game.prototype = Object.create(IsCorrectAnswer.prototype);
+Game.prototype.askQuestion = common.memoize(Game.prototype.askQuestion);
 
 Game.prototype.start = async function() {
   let { answer } = this;
