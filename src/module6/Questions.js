@@ -15,7 +15,7 @@ function Questions() {
     return new Promise((res, rej) => {
       this.IO.question(q, (answer) => {
         let nAnswer = parseInt(answer, 10);
-        if (this.isValidAnswer(nAnswer)) {
+        if (this.isNotValidAnswer(nAnswer)) {
           nAnswer = this.askQuestion("Enter correct answer: ");
         }
         answers.push(nAnswer);
@@ -26,7 +26,7 @@ function Questions() {
   this.sayAnswers = function() {
     console.log(answers);
   };
-  this.isValidAnswer = function(answer) {
+  this.isNotValidAnswer = function(answer) {
     return answer > 100 || answer < 0 || Number.isNaN(answer);
   };
 }
