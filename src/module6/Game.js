@@ -1,24 +1,24 @@
-const { IsCorrectAnswer } = require("./IsCorrectAnswer");
-const { common } = require("./common");
 
-function Game() {
-  IsCorrectAnswer.call(this, common.randomInteger(1, 100));
+function Game(Steps,Questions,IsCorrectAnswer,common) {
+  this.Steps = new Steps();
+  this.Questions = new Questions();
+  this.IsCorrectAnswer = new IsCorrectAnswer(common.randomInteger(1, 100));
+
   this.answer = "";
-}
-Game.prototype = Object.create(IsCorrectAnswer.prototype);
-Game.prototype.askQuestion = common.memoize(Game.prototype.askQuestion);
 
-Game.prototype.start = async function() {
-  let { answer } = this;
-  while (this.checkSteps()) {
-    answer = await this.askQuestion("Enter number: ");
-    if (this.checkCorrectAnswer(Number(answer))) {
-      this.IO.close();
+  this.start = async function() {
+    let { answer } = this;
+    while (this.Steps.checkSteps()) {
+      answer = await this.Questions.askQuestion("Enter number: ");
+      if (this.IsCorrectAnswer.checkCorrectAnswer(Number(answer))) {
+        this.Questions.IO.close();
+      }
+      this.Steps.addStep();
     }
-    this.addStep();
-  }
-  this.IO.close();
-};
+    this.Questions.IO.close();
+  };
+}
+
 
 module.exports = {
   Game,

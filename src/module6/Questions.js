@@ -1,11 +1,16 @@
 const readline = require("readline");
 
-function Questions() {
-  const answers = [];
+function IO() {
   this.IO = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
+}
+
+function Questions() {
+  IO.call(this);
+  const answers = [];
+
   this.askQuestion = function(q) {
     return new Promise((res, rej) => {
       this.IO.question(q, (answer) => {
@@ -21,9 +26,9 @@ function Questions() {
   this.sayAnswers = function() {
     console.log(answers);
   };
-  this.isValidAnswer = function (answer) {
+  this.isValidAnswer = function(answer) {
     return answer > 100 || answer < 0 || Number.isNaN(answer);
-  }
+  };
 }
 
 module.exports = {
